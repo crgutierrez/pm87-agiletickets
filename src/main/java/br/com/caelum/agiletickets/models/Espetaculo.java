@@ -101,7 +101,7 @@ public class Espetaculo {
 		return null;
 	}
 	
-	public boolean Vagas(int qtd, int min)
+	public boolean vagas(int qtd, int min)
    {
        // ALUNO: Não apague esse metodo. Esse sim será usado no futuro! ;)
        int totDisp = 0;

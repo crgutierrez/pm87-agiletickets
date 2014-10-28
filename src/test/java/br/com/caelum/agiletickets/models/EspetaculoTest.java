@@ -48,7 +48,7 @@ public class EspetaculoTest {
 		ivete.getSessoes().add(sessaoComIngressosSobrando(3));
 		ivete.getSessoes().add(sessaoComIngressosSobrando(4));
 
-		assertTrue(ivete.Vagas(5, 3));
+		assertTrue(ivete.vagas(5, 3));
 	}
 
 	@Test
@@ -59,7 +59,7 @@ public class EspetaculoTest {
 		ivete.getSessoes().add(sessaoComIngressosSobrando(3));
 		ivete.getSessoes().add(sessaoComIngressosSobrando(4));
 
-		assertTrue(ivete.Vagas(10, 3));
+		assertTrue(ivete.vagas(10, 3));
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class EspetaculoTest {
 		ivete.getSessoes().add(sessaoComIngressosSobrando(2));
 		ivete.getSessoes().add(sessaoComIngressosSobrando(2));
 
-		assertFalse(ivete.Vagas(5, 3));
+		assertFalse(ivete.vagas(5, 3));
 	}
 
 	private Sessao sessaoComIngressosSobrando(int quantidade) {
