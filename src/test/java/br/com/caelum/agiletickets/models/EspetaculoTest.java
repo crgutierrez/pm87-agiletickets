@@ -15,7 +15,7 @@ public class EspetaculoTest {
 		ivete.getSessoes().add(sessaoComIngressosSobrando(3));
 		ivete.getSessoes().add(sessaoComIngressosSobrando(2));
 
-		assertTrue(ivete.Vagas(5));
+		assertTrue(ivete.vagas(5));
 	}
 
 	@Test
@@ -26,7 +26,7 @@ public class EspetaculoTest {
 		ivete.getSessoes().add(sessaoComIngressosSobrando(3));
 		ivete.getSessoes().add(sessaoComIngressosSobrando(2));
 
-		assertTrue(ivete.Vagas(6));
+		assertTrue(ivete.vagas(6));
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class EspetaculoTest {
 		ivete.getSessoes().add(sessaoComIngressosSobrando(3));
 		ivete.getSessoes().add(sessaoComIngressosSobrando(2));
 
-		assertFalse(ivete.Vagas(15));
+		assertFalse(ivete.vagas(15));
 	}
 
 	@Test
