@@ -29,16 +29,18 @@ import com.google.common.base.Strings;
 
 @Resource
 public class EspetaculosController {
-	
-	private NumberFormat CURRENCY = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-	
+
+	private NumberFormat CURRENCY = NumberFormat
+			.getCurrencyInstance(new Locale("pt", "BR"));
+
 	private final Result result;
 	private final Validator validator;
 	private final Agenda agenda;
 	private final DiretorioDeEstabelecimentos estabelecimentos;
 	private Estabelecimento estabelecimento;
 
-	public EspetaculosController(Result result, Validator validator, Agenda agenda, DiretorioDeEstabelecimentos estabelecimentos) {
+	public EspetaculosController(Result result, Validator validator,
+			Agenda agenda, DiretorioDeEstabelecimentos estabelecimentos) {
 		this.result = result;
 		this.validator = validator;
 		this.agenda = agenda;
@@ -58,17 +60,19 @@ public class EspetaculosController {
 		// se nao tiver nome, avisa o usuario
 		// se nao tiver descricao, avisa o usuario
 		if (Strings.isNullOrEmpty(espetaculo.getNome())) {
-			validator.add(new ValidationMessage("Nome do espetáculo não pode estar em branco", ""));
+			validator.add(new ValidationMessage(
+					"Nome do espetáculo não pode estar em branco", ""));
 		}
 		if (Strings.isNullOrEmpty(espetaculo.getDescricao())) {
-			validator.add(new ValidationMessage("Descrição do espetáculo não pode estar em branco", ""));
+			validator.add(new ValidationMessage(
+					"Descrição do espetáculo não pode estar em branco", ""));
 		}
 		validator.onErrorRedirectTo(this).lista();
 
 		agenda.cadastra(espetaculo);
 		result.redirectTo(this).lista();
 	}
-	
+
 	@Get("/espetaculo/{espetaculoId}/sessoes")
 	public void sessoes(Long espetaculoId) {
 		Espetaculo espetaculo = carregaEspetaculo(espetaculoId);
@@ -77,19 +81,22 @@ public class EspetaculosController {
 	}
 
 	@Post("/espetaculo/{espetaculoId}/sessoes")
-	public void cadastraSessoes(Long espetaculoId, LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) {
+	public void cadastraSessoes(Long espetaculoId, LocalDate inicio,
+			LocalDate fim, LocalTime horario, Periodicidade periodicidade) {
 		Espetaculo espetaculo = carregaEspetaculo(espetaculoId);
 
 		// aqui faz a magica!
 		// cria sessoes baseado no periodo de inicio e fim passados pelo usuario
-		List<Sessao> sessoes = espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
+		List<Sessao> sessoes = espetaculo.criaSessoes(inicio, fim, horario,
+				periodicidade);
 
 		agenda.agende(sessoes);
 
-		result.include("message", sessoes.size() + " sessões criadas com sucesso");
+		result.include("message", sessoes.size()
+				+ " sessões criadas com sucesso");
 		result.redirectTo(this).lista();
 	}
-	
+
 	@Get("/sessao/{id}")
 	public void sessao(Long id) {
 		Sessao sessao = agenda.sessao(id);
@@ -99,8 +106,9 @@ public class EspetaculosController {
 
 		result.include("sessao", sessao);
 	}
-	
-	@Post @Path("/sessao/{sessaoId}/reserva")
+
+	@Post
+	@Path("/sessao/{sessaoId}/reserva")
 	public void reserva(Long sessaoId, final Integer quantidade) {
 		Sessao sessao = agenda.sessao(sessaoId);
 		if (sessao == null) {
@@ -109,11 +117,13 @@ public class EspetaculosController {
 		}
 
 		if (quantidade < 1) {
-			validator.add(new ValidationMessage("Você deve escolher um lugar ou mais", ""));
+			validator.add(new ValidationMessage(
+					"Você deve escolher um lugar ou mais", ""));
 		}
 
 		if (!sessao.podeReservar(quantidade)) {
-			validator.add(new ValidationMessage("Não existem ingressos disponíveis", ""));
+			validator.add(new ValidationMessage(
+					"Não existem ingressos disponíveis", ""));
 		}
 
 		// em caso de erro, redireciona para a lista de sessao
@@ -123,7 +133,8 @@ public class EspetaculosController {
 
 		sessao.reserva(quantidade);
 
-		result.include("message", "Sessão reservada com sucesso por " + CURRENCY.format(precoTotal));
+		result.include("message", "Sessão reservada com sucesso por "
+				+ CURRENCY.format(precoTotal));
 
 		result.redirectTo(IndexController.class).index();
 	}
@@ -141,5 +152,5 @@ public class EspetaculosController {
 	private Estabelecimento criaEstabelecimento(Long id) {
 		return estabelecimentos.todos().get(0);
 	}
-	
+
 }
