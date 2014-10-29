@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.joda.time.Weeks;
 
 @Entity
 public class Espetaculo {
@@ -98,13 +99,23 @@ public class Espetaculo {
 	 */
 	public List<Sessao> criaSessoes(LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) {
 		List<Sessao> sessoes = new ArrayList<Sessao>();
-		int dias = Days.daysBetween(inicio, fim).getDays();
-		for (int i = 0; i <= dias; i++) {
-			Sessao sessao = new Sessao();
-			sessoes.add(sessao);
+		if (periodicidade.equals(Periodicidade.DIARIA)) {
+			int dias = Days.daysBetween(inicio, fim).getDays();
+			criaSessoesPorTamanhoPeriodo(sessoes, dias);
+		}
+		else {
+			int semanas = Weeks.weeksBetween(inicio, fim).getWeeks();
+			criaSessoesPorTamanhoPeriodo(sessoes, semanas);
 		}
 		// ALUNO: Não apague esse metodo. Esse sim será usado no futuro! ;)
 		return sessoes;
+	}
+
+	private void criaSessoesPorTamanhoPeriodo(List<Sessao> sessoes, int semanas) {
+		for (int i = 0; i <= semanas; i++) {
+			Sessao sessao = new Sessao();
+			sessoes.add(sessao);
+		}
 	}
 
 	public boolean vagas(int qtd, int min) {

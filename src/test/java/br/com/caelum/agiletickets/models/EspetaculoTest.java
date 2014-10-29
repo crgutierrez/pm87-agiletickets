@@ -106,7 +106,17 @@ public class EspetaculoTest {
 		
 		assertEquals(3, espetaculo.criaSessoes(inicio, fim, horario, periodicidade).size() );
 		
+	}
+	
+	@Test
+	public void dadoInicioHojeMaisUmMesDevolveCincoSessoes() throws Exception {
+		Espetaculo espetaculo = new Espetaculo();
+		LocalDate inicio = new LocalDate();
+		LocalDate fim = new LocalDate().plusWeeks(4);
+		LocalTime horario = new LocalTime();
+		Periodicidade periodicidade = Periodicidade.SEMANAL;
 		
+		assertEquals(5, espetaculo.criaSessoes(inicio, fim, horario, periodicidade).size() );
 	}
 	
 }
