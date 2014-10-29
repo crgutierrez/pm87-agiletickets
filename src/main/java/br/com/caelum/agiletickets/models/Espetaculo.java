@@ -105,7 +105,7 @@ public class Espetaculo {
 		if(inicio.isBefore(hoje)) {
 			throw new DataPassadoException();
 		}
-		List sessoes = periodicidade.criaSessoes(inicio, fim);
+		List sessoes = periodicidade.criaSessoes(this,inicio, fim,horario);
 		// ALUNO: Não apague esse metodo. Esse sim será usado no futuro! ;)
 		return sessoes;
 	}
