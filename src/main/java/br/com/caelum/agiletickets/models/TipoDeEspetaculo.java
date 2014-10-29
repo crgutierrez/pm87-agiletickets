@@ -7,13 +7,17 @@ public enum TipoDeEspetaculo {
 	CINEMA {
 		@Override
 		public BigDecimal calculaPreco(Sessao sessao) {
-			return calculaPrecoCinemaShow(sessao);
+			double ocupacao = 0.05;
+			double taxaOcupacao = 0.10;
+			return calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
 		}
 	},
 	SHOW {
 		@Override
 		public BigDecimal calculaPreco(Sessao sessao) {
-			return calculaPrecoCinemaShow(sessao);
+			double ocupacao = 0.05;
+			double taxaOcupacao = 0.10;
+			return calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
 		}
 	},
 	TEATRO {
@@ -63,12 +67,5 @@ public enum TipoDeEspetaculo {
 		return preco;
 	}
 
-	private static BigDecimal calculaPrecoCinemaShow(Sessao sessao) {
-		BigDecimal preco;
-		double ocupacao = 0.05;
-		double taxaOcupacao = 0.10;
-		preco = calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
-		
-		return preco;
-	}
+	
 }
