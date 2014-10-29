@@ -16,13 +16,9 @@ public enum Periodicidade {
 		public List<Sessao> criaSessoes(Espetaculo espetaculo,LocalDate inicio, LocalDate fim, LocalTime horario) {
 			List<Sessao> sessoes = new ArrayList<Sessao>();
 			int dias = Days.daysBetween(inicio, fim).getDays();
-			for (int i = 0; i <= dias; i++) {
+			for (int i = 0; i < dias; i++) {
 				LocalDate inicioSessao = inicio.plusDays(i);
-				Sessao sessao = new Sessao();
-				sessao.setEspetaculo(espetaculo);
-				sessao.setInicio(inicioSessao.toDateTime(horario));
-				sessao.setTotalIngressos(10);
-				sessoes.add(sessao);
+				criaUmaSessao(espetaculo, horario, sessoes, inicioSessao);
 			}
 		
 			return sessoes;
@@ -35,21 +31,23 @@ public enum Periodicidade {
 		public List<Sessao> criaSessoes(Espetaculo espetaculo,LocalDate inicio, LocalDate fim, LocalTime horario) {
 			List<Sessao> sessoes = new ArrayList<Sessao>();
 			int semanas = Weeks.weeksBetween(inicio, fim).getWeeks();
-			for (int i = 0; i <= semanas; i++) {
+			for (int i = 0; i < semanas; i++) {
 				LocalDate inicioSessao = inicio.plusWeeks(i);
-				
-				Sessao sessao = new Sessao();
-			
-				sessao.setEspetaculo(espetaculo);
-				sessao.setInicio(inicioSessao.toDateTime(horario));
-				sessao.setTotalIngressos(10);
-				sessoes.add(sessao);
+				criaUmaSessao(espetaculo, horario, sessoes, inicioSessao);
 			}
 			
 			return sessoes;
 		}
 
 	};
+
+	private static void criaUmaSessao(Espetaculo espetaculo, LocalTime horario, List<Sessao> sessoes, LocalDate inicioSessao) {
+			Sessao sessao = new Sessao();
+			sessao.setEspetaculo(espetaculo);
+			sessao.setInicio(inicioSessao.toDateTime(horario));
+			sessao.setTotalIngressos(10);
+			sessoes.add(sessao);
+	}
 
 	public abstract List<Sessao> criaSessoes(Espetaculo espetaculo, LocalDate inicio, LocalDate fim, LocalTime horario);
 	

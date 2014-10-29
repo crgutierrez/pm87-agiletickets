@@ -2,6 +2,8 @@ package br.com.caelum.agiletickets.models;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -84,42 +86,69 @@ public class EspetaculoTest {
 
 		return sessao;
 	}
+
 	@Test
 	public void umaSessaoInicioEFimIguaisDiariaDevolveUma() throws Exception {
 		Espetaculo espetaculo = new Espetaculo();
-		LocalDate inicio = new LocalDate();
-		LocalDate fim = new LocalDate();
-		LocalTime horario = new LocalTime();
+		LocalDate inicio = new LocalDate(2014, 10, 29);
+		LocalDate fim = new LocalDate(2014, 10, 30);
+		LocalTime horario = new LocalTime(21, 00);
 		Periodicidade periodicidade = Periodicidade.DIARIA;
-		
-		assertEquals(1, espetaculo.criaSessoes(inicio, fim, horario, periodicidade).size() );
-		
-		
-	}
-	@Test
-	public void dadoInicioHojeMaisDoisDiasDevolveTresSessoes() throws Exception {
-		Espetaculo espetaculo = new Espetaculo();
-		LocalDate inicio = new LocalDate();
-		LocalDate fim = new LocalDate().plusDays(2);
-		LocalTime horario = new LocalTime();
-		Periodicidade periodicidade = Periodicidade.DIARIA;
-		
-		assertEquals(3, espetaculo.criaSessoes(inicio, fim, horario, periodicidade).size() );
-		
-	}
+
+		List<Sessao> sessoes = espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
+		assertEquals(1, sessoes.size());
+
+		Sessao sessao = sessoes.get(0);
+		assertEqualsSessao(sessao,espetaculo,"21:00","29/10/14");
 	
+	}
+
+	private void assertEqualsSessao(Sessao sessao, Espetaculo espetaculo, String horario, String dia) {
+		assertEquals(espetaculo, sessao.getEspetaculo());
+		assertEquals(horario, sessao.getHora());
+		assertEquals(dia, sessao.getDia());
+		
+		
+		
+	}
+
 	@Test
-	public void dadoInicioHojeMaisUmMesDevolveCincoSessoes() throws Exception {
+	public void dadoInicioHojeMaisDoisDiasDevolveDoisSessoes() throws Exception {
+		Espetaculo espetaculo = new Espetaculo();
+		LocalDate inicio = new LocalDate(2014, 10, 29);
+		LocalDate fim = new LocalDate(2014, 10, 31);
+		LocalTime horario = new LocalTime(21, 00);
+		Periodicidade periodicidade = Periodicidade.DIARIA;
+
+		List<Sessao> sessoes = espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
+		assertEquals(2, sessoes.size());
+
+		Sessao sessao = sessoes.get(0);
+		assertEqualsSessao(sessao,espetaculo,"21:00","29/10/14");
+		
+		Sessao sessaoAmanha = sessoes.get(1);
+		
+		assertEqualsSessao(sessaoAmanha,espetaculo,"21:00","30/10/14");
+		
+	}
+
+	@Test
+	public void dadoInicioHojeMaisUmMesDevolveQuatroSessoes() throws Exception {
 		Espetaculo espetaculo = new Espetaculo();
 		LocalDate inicio = new LocalDate();
 		LocalDate fim = new LocalDate().plusWeeks(4);
-		LocalTime horario = new LocalTime();
+		LocalTime horario = new LocalTime(21,00);
 		Periodicidade periodicidade = Periodicidade.SEMANAL;
+
+		List<Sessao> sessoes = espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
 		
-		assertEquals(5, espetaculo.criaSessoes(inicio, fim, horario, periodicidade).size() );
+		assertEquals(4, sessoes.size());
+		
+		
+		
 	}
-	
-	@Test(expected=DataPassadoException.class)
+
+	@Test(expected = DataPassadoException.class)
 	public void naoPermiteDataDoFimMenorQueInicio() throws Exception {
 		Espetaculo espetaculo = new Espetaculo();
 		LocalDate inicio = new LocalDate();
@@ -128,18 +157,16 @@ public class EspetaculoTest {
 		Periodicidade periodicidade = Periodicidade.DIARIA;
 		espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
 	}
-	
-	@Test(expected=DataPassadoException.class)
+
+	@Test(expected = DataPassadoException.class)
 	public void naoPermiteDataInicioNoPassado() throws Exception {
 		Espetaculo espetaculo = new Espetaculo();
 		LocalDate inicio = new LocalDate().minusDays(3);
-		
+
 		LocalDate fim = new LocalDate().minusDays(2);
 		LocalTime horario = new LocalTime();
 		Periodicidade periodicidade = Periodicidade.DIARIA;
 		espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
 	}
-	
-	
-	
+
 }
