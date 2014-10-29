@@ -29,31 +29,35 @@ public enum TipoDeEspetaculo {
 	BALLET {
 		@Override
 		public BigDecimal calculaPreco(Sessao sessao) {
-			return calculaPrecoBalletOrquestra(sessao);
+			double ocupacao = 0.50;
+			double taxaOcupacao = 0.20;
+			BigDecimal preco = calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
+
+			if (sessao.getDuracaoEmMinutos() > 60) {
+				preco = preco.add(sessao.getPreco().multiply(
+						BigDecimal.valueOf(0.10)));
+			}
+			return preco;
 		}
 	},
 	ORQUESTRA {
 		@Override
 		public BigDecimal calculaPreco(Sessao sessao) {
-			return calculaPrecoBalletOrquestra(sessao);
+			double ocupacao = 0.50;
+			double taxaOcupacao = 0.20;
+			BigDecimal preco = calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
+
+			if (sessao.getDuracaoEmMinutos() > 60) {
+				preco = preco.add(sessao.getPreco().multiply(
+						BigDecimal.valueOf(0.10)));
+			}
+			return preco;
 		}
 	};
 
 	public abstract BigDecimal calculaPreco(Sessao sessao);
 
-	private static BigDecimal calculaPrecoBalletOrquestra(Sessao sessao) {
-		BigDecimal preco;
-		double ocupacao = 0.50;
-		double taxaOcupacao = 0.20;
-		preco = calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
-
-		if (sessao.getDuracaoEmMinutos() > 60) {
-			preco = preco.add(sessao.getPreco().multiply(
-					BigDecimal.valueOf(0.10)));
-		}
-		return preco;
-	}
-
+	
 	private static BigDecimal calculaTaxaOcupacao(Sessao sessao, double ocupacao,
 			double taxaOcupacao) {
 		BigDecimal preco;
