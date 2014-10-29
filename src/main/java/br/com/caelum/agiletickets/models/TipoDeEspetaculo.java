@@ -33,10 +33,7 @@ public enum TipoDeEspetaculo {
 			double taxaOcupacao = 0.20;
 			BigDecimal preco = calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
 
-			if (sessao.getDuracaoEmMinutos() > 60) {
-				preco = preco.add(sessao.getPreco().multiply(
-						BigDecimal.valueOf(0.10)));
-			}
+			preco = calculaTaxaDeDuracao(sessao, preco);
 			return preco;
 		}
 	},
@@ -47,14 +44,21 @@ public enum TipoDeEspetaculo {
 			double taxaOcupacao = 0.20;
 			BigDecimal preco = calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
 
-			if (sessao.getDuracaoEmMinutos() > 60) {
-				preco = preco.add(sessao.getPreco().multiply(
-						BigDecimal.valueOf(0.10)));
-			}
+			preco = calculaTaxaDeDuracao(sessao, preco);
+			
 			return preco;
 		}
 	};
 
+	
+	private static  BigDecimal calculaTaxaDeDuracao(Sessao sessao, BigDecimal preco) {
+		if (sessao.getDuracaoEmMinutos() > 60) {
+			preco = preco.add(sessao.getPreco().multiply(
+					BigDecimal.valueOf(0.10)));
+		}
+		return preco;
+	}
+	
 	public abstract BigDecimal calculaPreco(Sessao sessao);
 
 	
