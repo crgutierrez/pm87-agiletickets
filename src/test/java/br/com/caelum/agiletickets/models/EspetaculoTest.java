@@ -1,9 +1,13 @@
 package br.com.caelum.agiletickets.models;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.junit.Test;
+
+import br.com.caelum.agiletickets.domain.precos.SessaoTestDataBuilder;
 
 public class EspetaculoTest {
 
@@ -79,6 +83,30 @@ public class EspetaculoTest {
 		sessao.setIngressosReservados(quantidade);
 
 		return sessao;
+	}
+	@Test
+	public void umaSessaoInicioEFimIguaisDiariaDevolveUma() throws Exception {
+		Espetaculo espetaculo = new Espetaculo();
+		LocalDate inicio = new LocalDate();
+		LocalDate fim = new LocalDate();
+		LocalTime horario = new LocalTime();
+		Periodicidade periodicidade = Periodicidade.DIARIA;
+		
+		assertEquals(1, espetaculo.criaSessoes(inicio, fim, horario, periodicidade).size() );
+		
+		
+	}
+	@Test
+	public void dadoInicioHojeMaisDoisDiasDevolveTresSessoes() throws Exception {
+		Espetaculo espetaculo = new Espetaculo();
+		LocalDate inicio = new LocalDate();
+		LocalDate fim = new LocalDate().plusDays(2);
+		LocalTime horario = new LocalTime();
+		Periodicidade periodicidade = Periodicidade.DIARIA;
+		
+		assertEquals(3, espetaculo.criaSessoes(inicio, fim, horario, periodicidade).size() );
+		
+		
 	}
 	
 }
