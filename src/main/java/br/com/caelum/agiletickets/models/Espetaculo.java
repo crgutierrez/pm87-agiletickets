@@ -98,25 +98,12 @@ public class Espetaculo {
 	 * Repare que a data da primeira sessao é sempre a data inicial.
 	 */
 	public List<Sessao> criaSessoes(LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) {
-		List<Sessao> sessoes = new ArrayList<Sessao>();
-		if (periodicidade.equals(Periodicidade.DIARIA)) {
-			int dias = Days.daysBetween(inicio, fim).getDays();
-			criaSessoesPorTamanhoPeriodo(sessoes, dias);
-		}
-		else {
-			int semanas = Weeks.weeksBetween(inicio, fim).getWeeks();
-			criaSessoesPorTamanhoPeriodo(sessoes, semanas);
-		}
+		List sessoes = periodicidade.criaSessoes(inicio, fim);
 		// ALUNO: Não apague esse metodo. Esse sim será usado no futuro! ;)
 		return sessoes;
 	}
 
-	private void criaSessoesPorTamanhoPeriodo(List<Sessao> sessoes, int semanas) {
-		for (int i = 0; i <= semanas; i++) {
-			Sessao sessao = new Sessao();
-			sessoes.add(sessao);
-		}
-	}
+	
 
 	public boolean vagas(int qtd, int min) {
 		// ALUNO: Não apague esse metodo. Esse sim será usado no futuro! ;)
