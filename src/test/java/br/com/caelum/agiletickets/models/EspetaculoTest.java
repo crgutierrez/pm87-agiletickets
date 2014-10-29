@@ -119,4 +119,27 @@ public class EspetaculoTest {
 		assertEquals(5, espetaculo.criaSessoes(inicio, fim, horario, periodicidade).size() );
 	}
 	
+	@Test(expected=DataPassadoException.class)
+	public void naoPermiteDataDoFimMenorQueInicio() throws Exception {
+		Espetaculo espetaculo = new Espetaculo();
+		LocalDate inicio = new LocalDate();
+		LocalDate fim = new LocalDate().minusDays(2);
+		LocalTime horario = new LocalTime();
+		Periodicidade periodicidade = Periodicidade.DIARIA;
+		espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
+	}
+	
+	@Test(expected=DataPassadoException.class)
+	public void naoPermiteDataInicioNoPassado() throws Exception {
+		Espetaculo espetaculo = new Espetaculo();
+		LocalDate inicio = new LocalDate().minusDays(3);
+		
+		LocalDate fim = new LocalDate().minusDays(2);
+		LocalTime horario = new LocalTime();
+		Periodicidade periodicidade = Periodicidade.DIARIA;
+		espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
+	}
+	
+	
+	
 }

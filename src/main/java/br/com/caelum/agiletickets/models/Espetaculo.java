@@ -98,6 +98,13 @@ public class Espetaculo {
 	 * Repare que a data da primeira sessao é sempre a data inicial.
 	 */
 	public List<Sessao> criaSessoes(LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) {
+		if(inicio.isAfter(fim)) {
+			throw new DataPassadoException();
+		}
+		LocalDate hoje = new LocalDate();
+		if(inicio.isBefore(hoje)) {
+			throw new DataPassadoException();
+		}
 		List sessoes = periodicidade.criaSessoes(inicio, fim);
 		// ALUNO: Não apague esse metodo. Esse sim será usado no futuro! ;)
 		return sessoes;
