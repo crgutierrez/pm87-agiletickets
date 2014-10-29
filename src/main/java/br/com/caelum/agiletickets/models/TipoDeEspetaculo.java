@@ -39,13 +39,9 @@ public enum TipoDeEspetaculo {
 
 	private static BigDecimal calculaPrecoBalletOrquestra(Sessao sessao) {
 		BigDecimal preco;
-		if ((sessao.getTotalIngressos() - sessao.getIngressosReservados())
-				/ sessao.getTotalIngressos().doubleValue() <= 0.50) {
-			preco = sessao.getPreco().add(
-					sessao.getPreco().multiply(BigDecimal.valueOf(0.20)));
-		} else {
-			preco = sessao.getPreco();
-		}
+		double ocupacao = 0.50;
+		double taxaOcupacao = 0.20;
+		preco = calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
 
 		if (sessao.getDuracaoEmMinutos() > 60) {
 			preco = preco.add(sessao.getPreco().multiply(
@@ -54,15 +50,25 @@ public enum TipoDeEspetaculo {
 		return preco;
 	}
 
-	private static BigDecimal calculaPrecoCinemaShow(Sessao sessao) {
+	private static BigDecimal calculaTaxaOcupacao(Sessao sessao, double ocupacao,
+			double taxaOcupacao) {
 		BigDecimal preco;
 		if ((sessao.getTotalIngressos() - sessao.getIngressosReservados())
-				/ sessao.getTotalIngressos().doubleValue() <= 0.05) {
+				/ sessao.getTotalIngressos().doubleValue() <= ocupacao) {
 			preco = sessao.getPreco().add(
-					sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
+					sessao.getPreco().multiply(BigDecimal.valueOf(taxaOcupacao)));
 		} else {
 			preco = sessao.getPreco();
 		}
+		return preco;
+	}
+
+	private static BigDecimal calculaPrecoCinemaShow(Sessao sessao) {
+		BigDecimal preco;
+		double ocupacao = 0.05;
+		double taxaOcupacao = 0.10;
+		preco = calculaTaxaOcupacao(sessao, ocupacao, taxaOcupacao);
+		
 		return preco;
 	}
 }
