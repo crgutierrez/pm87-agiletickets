@@ -34,6 +34,34 @@ public class Sessao {
 
 	private BigDecimal preco;
 
+	
+	// Era usada antes no sistema para avisar o cliente de que
+    // os ingressos estavam acabando!
+    // Hoje nao serve pra nada, mas eh sempre bom ter
+    // um backup guardado! ;)
+    public boolean pertoDoLimiteDeSeguranca_NaoUtilizada()
+    {
+            int limite = 3;
+            return getIngressosDisponiveis() > limite;
+    }
+
+	public void reserva(Integer numeroDeIngressos) {
+		// soma quantidade na variavel ingressos reservados
+		this.ingressosReservados += numeroDeIngressos;
+	}
+
+	public boolean podeReservar(Integer numeroDeIngressos) {
+		return getIngressosDisponiveis() >= numeroDeIngressos;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	public BigDecimal getPreco() {
+		return preco;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -90,32 +118,4 @@ public class Sessao {
 		// faz a conta de total de ingressos menos ingressos reservados
 		return totalIngressos - ingressosReservados;
 	}
-	
-	// Era usada antes no sistema para avisar o cliente de que
-    // os ingressos estavam acabando!
-    // Hoje nao serve pra nada, mas eh sempre bom ter
-    // um backup guardado! ;)
-    public boolean pertoDoLimiteDeSeguranca_NaoUtilizada()
-    {
-            int limite = 3;
-            return getIngressosDisponiveis() > limite;
-    }
-
-	public void reserva(Integer numeroDeIngressos) {
-		// soma quantidade na variavel ingressos reservados
-		this.ingressosReservados += numeroDeIngressos;
-	}
-
-	public boolean podeReservar(Integer numeroDeIngressos) {
-		return getIngressosDisponiveis() >= numeroDeIngressos;
-	}
-
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
-	}
-
-	public BigDecimal getPreco() {
-		return preco;
-	}
-	
 }
