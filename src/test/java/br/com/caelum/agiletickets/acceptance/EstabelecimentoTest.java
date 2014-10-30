@@ -1,10 +1,13 @@
 package br.com.caelum.agiletickets.acceptance;
 
+import java.io.File;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import br.com.caelum.agiletickets.acceptance.page.EstabelecimentosPage;
@@ -17,7 +20,8 @@ public class EstabelecimentoTest {
 
 	@BeforeClass
 	public static void abreBrowser() {
-		browser = new FirefoxDriver();
+		browser = new FirefoxDriver(new FirefoxBinary(new File("/home/aluno/firefox/firefox")),null);
+		
 	}
 
 	@Before
