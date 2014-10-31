@@ -99,7 +99,7 @@ public class EspetaculoTest {
 
 		Sessao sessao = sessoes.get(0);
 		assertEqualsSessao(sessao, espetaculo, "21:00", "29/10/20");
-	
+	fail("hello chuck");
 	}
 
 	private void assertEqualsSessao(Sessao sessao, Espetaculo espetaculo, String horario, String dia) {
