@@ -1,8 +1,6 @@
 package br.com.caelum.agiletickets.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -101,6 +99,7 @@ public class EspetaculoTest {
 
 		Sessao sessao = sessoes.get(0);
 		assertEqualsSessao(sessao, espetaculo, "21:00", "29/10/20");
+		fail("FEIO!");
 
 	}
 
