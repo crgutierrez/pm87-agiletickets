@@ -95,7 +95,7 @@ public class EspetaculoTest {
 		Periodicidade periodicidade = Periodicidade.DIARIA;
 
 		List<Sessao> sessoes = espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
-		assertEquals(0, sessoes.size());
+		assertEquals(1, sessoes.size());
 
 		Sessao sessao = sessoes.get(0);
 		assertEqualsSessao(sessao, espetaculo, "21:00", "29/10/20");
